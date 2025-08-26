@@ -6,8 +6,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignupRequest {
-    private String username;
-    private String email;
-    private String password;
+public class WorkoutExerciseDTO {
+    private Long exerciseId;
+    private int sets;
+    private int reps;
 }

@@ -9,8 +9,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutRequest {
+public class WorkoutResponse {
+    private Long id;
     private String name;
     private LocalDateTime scheduledDate;
-    private List <WorkoutExerciseDTO> exercises;
+    private List <WorkoutExerciseResponseDTO> exercises;
 }
