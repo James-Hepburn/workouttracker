@@ -6,6 +6,7 @@ import com.example.workouttracker.model.WorkoutExercise;
 import com.example.workouttracker.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ public class WorkoutService {
     @Autowired
     private WorkoutRepository workoutRepository;
 
+    @Transactional
     public Workout createWorkout (User user, String name, LocalDateTime scheduledDate, List <WorkoutExercise> exercises) {
         Workout workout = new Workout (user, name, exercises, scheduledDate);
         return this.workoutRepository.save (workout);

@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private String jwtSecret = "K9f#3nQ8pL2vW7tX!zRm4uE6sH1bG0yP";
+    private String jwtSecret = "K9f3nQ8pL2vW7tXzRm4uE6sH1bG0yPK9f3nQ8pL2vW7tXzRm4uE6sH1bG0yPK9f3nQ8pL2vW7tXzRm4uE6sH1bG0yP";
     private int jwtExpirationMs = 86400000;
 
     public String generateJwtToken( String username) {

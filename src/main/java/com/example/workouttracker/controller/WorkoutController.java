@@ -59,6 +59,33 @@ public class WorkoutController {
         return ResponseEntity.ok (response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity <?> updateWorkout (@PathVariable Long id, @RequestBody WorkoutRequest workoutRequest, Authentication authentication) {
+        User user = this.userService.findByUsername (authentication.getName ()).orElseThrow (() -> new RuntimeException ("User not found"));
+        Workout workout = this.workoutService.findById (id).orElseThrow (() -> new RuntimeException ("Workout not found"));
+
+        if (!workout.getUser ().getId ().equals (user.getId ())) {
+            return ResponseEntity.status (403).body ("Unauthorized");
+        }
+
+        workout.setName (workoutRequest.getName ());
+        workout.setScheduledDate (workoutRequest.getScheduledDate ());
+
+        List <WorkoutExercise> exercises = workoutRequest.getExercises ().stream ().map (dto -> {
+            Exercise exercise = this.exerciseService.findById (dto.getExerciseId ()).orElseThrow (() -> new RuntimeException ("Exercise not found"));
+            return new WorkoutExercise (exercise, workout, dto.getSets (), dto.getReps ());
+        }).collect (Collectors.toList ());
+
+        workout.getExercises ().clear ();
+        exercises.forEach (exercise -> {
+            exercise.setWorkout (workout);
+            workout.getExercises ().add (exercise);
+        });
+
+        this.workoutService.updateWorkout (workout);
+        return ResponseEntity.ok ("Workout updated successfully");
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity <?> deleteWorkout (@PathVariable Long id, Authentication authentication) {
         User user = this.userService.findByUsername (authentication.getName ()).orElseThrow (() -> new RuntimeException ("User not found"));
