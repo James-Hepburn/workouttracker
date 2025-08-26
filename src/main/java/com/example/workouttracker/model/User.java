@@ -3,6 +3,7 @@ package com.example.workouttracker.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,13 +29,12 @@ public class User {
     private Set <Role> roles;
 
     @OneToMany
-    List <Workout> workouts;
+    List <Workout> workouts = new ArrayList<>();
 
-    public User (String username, String email, String password, Set <Role> roles, List <Workout> workouts) {
+    public User (String username, String email, String password, Set <Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
-        this.workouts = workouts;
     }
 }
